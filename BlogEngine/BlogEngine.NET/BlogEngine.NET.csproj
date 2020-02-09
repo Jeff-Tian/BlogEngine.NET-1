@@ -1610,6 +1610,12 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+    <Content Include="SQLite.Interop.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="System.Data.SQLite.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Web.sitemap" />
   </ItemGroup>
   <ItemGroup>
@@ -2428,7 +2434,6 @@
     <Folder Include="App_Data\files\" />
     <Folder Include="App_Data\packages\" />
     <Folder Include="App_Data\pages\" />
-    <Folder Include="bin\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
