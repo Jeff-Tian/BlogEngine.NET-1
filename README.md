@@ -32,7 +32,15 @@ If you are looking for latest reincarnation in active development, please take a
 <br>
 
 
+# Deploy
 
+### 1. Azure
+
+[![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/)
+
+### 2. AppHarbor
+
+https://githubbridge.apphb.com/Bridge/New
 
 
 # Installation
