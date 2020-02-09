@@ -768,6 +768,7 @@
     <Content Include="Custom\Themes\Standard-2017\src\fonts\fontawesome-webfont.woff2" />
     <Content Include="Custom\Themes\Standard-2017\src\fonts\FontAwesome.otf" />
     <Content Include="Custom\Themes\Standard\page.master" />
+    <Content Include="App_Data\BlogEngine.s3db" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-dj.js" />
