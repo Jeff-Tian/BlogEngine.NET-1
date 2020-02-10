@@ -1,9 +1,8 @@
 [![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/)
 
-This repository provides latest source code for BlogEngine.NET project. 
+This repository provides latest source code for BlogEngine.NET project.
 Code regularly updated with security patches but there no plans to add new functionality.
 If you are looking for latest reincarnation in active development, please take a look at [Blogifier](https://github.com/blogifierdotnet/Blogifier) as modern cross-platform .NET Core alternative.
- 
 
 <a href="https://blogengine.io/themes/" target="_blank">
 <img src="https://blogengine.io/files/images/themes/themes.jpg" alt="Download BlogEngine Themes">
@@ -31,54 +30,62 @@ If you are looking for latest reincarnation in active development, please take a
 <br>
 <br>
 
-
 # Deploy
 
 ### 1. Azure
 
 [![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/)
 
+Live: https://be-net.azurewebsites.net/
+
 ### 2. AppHarbor
 
-https://githubbridge.apphb.com/Bridge/New
-
+Click: https://githubbridge.apphb.com/Bridge/New
+Live: https://insight-1.apphb.com
 
 # Installation
 
 There are two download options for BlogEngine.NET:
 
 ### 1. Web Project
+
 This is an ideal option that you just need to download and copy BlogEngine files on your website and then everything is ready:
 
 Requirements:
-  * ASP.NET 4.5 +
+
+- ASP.NET 4.5 +
 
 Steps:
+
 1. **[Download](https://github.com/rxtur/BlogEngine.NET/releases/download/v3.3.6.0/3360.zip)** and extract zip file on root of your website.
 2. Add write permissions to the `App_Data` and `Custom` folder.
 3. Installation is done.
 4. You can navigate to administration by adding `/admin/` to your website's URL, for example: `http://yourblog.com/admin/`
 5. Username: `admin` Password `admin`
 
-
 ### 2. Source Code
+
 This is the developer option. If you are interested is seeing how things work or want to add to the functionality, this is your option.
 
 Environment:
-  * Visual Studio 2015 +
-  * ASP.NET 4.5 +
+
+- Visual Studio 2015 +
+- ASP.NET 4.5 +
 
 Steps:
-  1. Clone repository
-  2. Open solution in Visual Studio 2015 +
-  3. Build and run solution to load website in the browser
-  4. You can navigate to administration on: `http://localhost:64079/admin/`
-  5. Username: `admin` Password `admin`
+
+1. Clone repository
+2. Open solution in Visual Studio 2015 +
+3. Build and run solution to load website in the browser
+4. You can navigate to administration on: `http://localhost:64079/admin/`
+5. Username: `admin` Password `admin`
 
 ### 3. Security Update
+
 After install, update `machineKey` in `Web.config` with values generated with tool [like this](https://www.allkeysgenerator.com/Random/ASP-Net-MachineKey-Generator.aspx). This will prevent known exploit (reported Sep 2019). This only effects if you use default `admin` account.
 
 # Screenshot
+
 More screenshots on the [website](https://blogengine.io).
 
 ![dashboard-3](https://cloud.githubusercontent.com/assets/1932785/11760070/0012f9d8-a052-11e5-84a8-e9097cb85f23.png)
