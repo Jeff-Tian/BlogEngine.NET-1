@@ -4,7 +4,7 @@
   <enablehttpcompression>False</enablehttpcompression>
   <emailsubjectprefix>Weblog</emailsubjectprefix>
   <htmlheader />
-  <theme>Standard</theme>
+  <theme>Standard-2017</theme>
   <facebooklanguage>en_US</facebooklanguage>
   <trackingscript />
   <showdescriptioninpostlist>False</showdescriptioninpostlist>
