@@ -695,7 +695,7 @@
         /// </returns>
         public static string GetSubDomain(Uri url)
         {
-           
+
             if (url.HostNameType == UriHostNameType.Dns)
             {
                 var host = url.Host;
@@ -811,7 +811,7 @@
 
         private static readonly Regex validIpV4AddressRegex = new Regex(@"^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$", RegexOptions.IgnoreCase);
         private static readonly Regex validHostnameRegex = new Regex(@"^(([a-z]|[a-z][a-z0-9\-]*[a-z0-9])\.)*([a-z]|[a-z][a-z0-9\-]*[a-z0-9])$", RegexOptions.IgnoreCase);
-        
+
 
         /// <summary>
         /// Email address by user name
@@ -825,7 +825,7 @@
             var users = userCollection.Cast<System.Web.Security.MembershipUser>().ToList();
             var user = users.FirstOrDefault(u => u.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase));
 
-            if(user != null)
+            if (user != null)
             {
                 return user.Email;
             }
@@ -908,7 +908,7 @@
             foreach (Assembly a in codeAssemblies)
             {
                 var types = a.GetTypes();
-                
+
                 Type extensionsAttribute = typeof(ExtensionAttribute);
 
                 sortedExtensions.AddRange(
@@ -955,12 +955,12 @@
         /// <param name="format">A format string</param>
         /// <param name="args">Arguments to replace in the format string</param>
 		public static void Log(string format, params object[] args)
-		{
-			if (OnLog != null)
-			{
-				OnLog(string.Format(format, args), EventArgs.Empty);
-			}
-		}
+        {
+            if (OnLog != null)
+            {
+                OnLog(string.Format(format, args), EventArgs.Empty);
+            }
+        }
 
         /// <summary>
         /// Sends a message to any subscribed log listeners.
@@ -1319,7 +1319,7 @@
 
             if (dir != null && Directory.Exists(dir))
             {
-                if (string.IsNullOrEmpty(file)) 
+                if (string.IsNullOrEmpty(file))
                     file = $"test{DateTime.Now.ToString("ddmmhhssss")}.txt";
 
                 try
@@ -1491,27 +1491,36 @@
             var assemblies = new List<Assembly>();
             var s = Path.Combine(HttpContext.Current.Server.MapPath("~/"), "bin");
             var fileEntries = Directory.GetFiles(s);
-            foreach (var asm in from fileName in fileEntries
-                                where fileName.EndsWith(".dll", StringComparison.OrdinalIgnoreCase)
-                                select Assembly.LoadFrom(fileName)
-                                into asm
-                                let attr = asm.GetCustomAttributes(typeof(AssemblyConfigurationAttribute), false)
-                                where attr.Length > 0
-                                let aca = (AssemblyConfigurationAttribute)attr[0]
-                                select asm)
+            try
             {
-                try
+                foreach (var asm in from fileName in fileEntries
+                                    where (fileName.EndsWith(".dll", StringComparison.OrdinalIgnoreCase) &&
+                                    !fileName.EndsWith("System.Data.SQLite.dll", StringComparison.OrdinalIgnoreCase) &&
+                                    !fileName.EndsWith("SQLite.Interop.dll", StringComparison.OrdinalIgnoreCase))
+                                    select Assembly.LoadFrom(fileName)
+                                    into asm
+                                    let attr = asm.GetCustomAttributes(typeof(AssemblyConfigurationAttribute), false)
+                                    where attr.Length > 0
+                                    let aca = (AssemblyConfigurationAttribute)attr[0]
+                                    select asm)
                 {
-                    // check if assembly can be loaded
-                    // before adding to collection
-                    asm.GetTypes();
-                    assemblies.Add(asm);
+                    try
+                    {
+                        // check if assembly can be loaded
+                        // before adding to collection
+                        asm.GetTypes();
+                        assemblies.Add(asm);
+                    }
+                    catch (Exception ex)
+                    {
+                        // only use to debug - any third party DLL can through this, not a crytical error
+                        Log(string.Format("Error loading compiled extensions from assembly {0}: {1}", asm.FullName, ex.Message));
+                    }
                 }
-                catch (Exception)
-                {
-                    // only use to debug - any third party DLL can through this, not a crytical error
-                    // Log(string.Format("Error loading compiled extensions from assembly {0}: {1}", asm.FullName, ex.Message));
-                }
+            }
+            catch (Exception e)
+            {
+                Log(string.Format("Error loading compiled extensions from assembly {0}", e.Message));
             }
             return assemblies;
         }
@@ -1546,9 +1555,10 @@
             }
 
             var readerSettings = new XmlReaderSettings
-                {
-                    MaxCharactersFromEntities = 1024, XmlResolver = new XmlSafeResolver() 
-                };
+            {
+                MaxCharactersFromEntities = 1024,
+                XmlResolver = new XmlSafeResolver()
+            };
 
             XmlDocument doc;
             try
@@ -1563,7 +1573,7 @@
             {
                 return null;
             }
-            
+
             return doc;
         }
 
