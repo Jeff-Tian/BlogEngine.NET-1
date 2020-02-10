@@ -39,7 +39,7 @@
         ///     Gets a collection of extensions
         /// </summary>
         [XmlElement]
-		public static Dictionary<string, ManagedExtension> Extensions
+        public static Dictionary<string, ManagedExtension> Extensions
         {
             get { return extensions; }
         }
@@ -160,7 +160,9 @@
         {
             var extension = GetExtension(extensionName);
             if (extension == null)
-                return null;
+            {
+                throw new ApplicationException("Failed to get extension '" + extensionName + "' for "+ Blog.CurrentInstance.BlogId.ToString() + "(" + Blog.CurrentInstance.IsPrimary.ToString()+ ", " + "primary" + ")" + " !");
+            }
 
             if (string.IsNullOrEmpty(settingName))
                 settingName = extensionName;
@@ -459,7 +461,7 @@
             }
             else
             {
-				if (!extensions.ContainsKey("MetaExtension"))
+                if (!extensions.ContainsKey("MetaExtension"))
                 {
                     extensions.Add("MetaExtension", meta);
                 }
@@ -502,8 +504,8 @@
                                     x.SubBlogEnabled = xa.SubBlogEnabled;
                                 }
                             }
-							if (!extensions.ContainsKey(x.Name))
-								extensions.Add(x.Name, x);
+                            if (!extensions.ContainsKey(x.Name))
+                                extensions.Add(x.Name, x);
                         }
                         catch (Exception e)
                         {
