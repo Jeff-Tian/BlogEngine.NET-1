@@ -1,3 +1,7 @@
 git push
-git push github master
-git push ah master
+
+:repeat
+git push github master || goto :repeat
+
+:repeat
+git push ah master || goto :repeat
