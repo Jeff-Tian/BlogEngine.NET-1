@@ -207,12 +207,12 @@ namespace App_Code.Controls
                 else
                 {
                     Blog.CurrentInstance.Cache.Add(
-                        $"{UserUniqueIdentifier}PageLoadTime", 
-                        value, 
-                        null, 
-                        Cache.NoAbsoluteExpiration, 
-                        new TimeSpan(1, 0, 0), 
-                        CacheItemPriority.Low, 
+                        $"{UserUniqueIdentifier}PageLoadTime",
+                        value,
+                        null,
+                        Cache.NoAbsoluteExpiration,
+                        new TimeSpan(1, 0, 0),
+                        CacheItemPriority.Low,
                         null);
                 }
             }
@@ -241,12 +241,12 @@ namespace App_Code.Controls
                 else
                 {
                     Blog.CurrentInstance.Cache.Add(
-                        $"{UserUniqueIdentifier}RecaptchaAttempts", 
-                        value, 
-                        null, 
-                        Cache.NoAbsoluteExpiration, 
-                        new TimeSpan(0, 15, 0), 
-                        CacheItemPriority.Low, 
+                        $"{UserUniqueIdentifier}RecaptchaAttempts",
+                        value,
+                        null,
+                        Cache.NoAbsoluteExpiration,
+                        new TimeSpan(0, 15, 0),
+                        CacheItemPriority.Low,
                         null);
                 }
             }
@@ -278,12 +278,12 @@ namespace App_Code.Controls
                 else
                 {
                     Blog.CurrentInstance.Cache.Add(
-                        $"{UserUniqueIdentifier}RecaptchaChallengeValue", 
-                        value, 
-                        null, 
-                        Cache.NoAbsoluteExpiration, 
-                        new TimeSpan(0, 1, 0), 
-                        CacheItemPriority.NotRemovable, 
+                        $"{UserUniqueIdentifier}RecaptchaChallengeValue",
+                        value,
+                        null,
+                        Cache.NoAbsoluteExpiration,
+                        new TimeSpan(0, 1, 0),
+                        CacheItemPriority.NotRemovable,
                         null);
                 }
             }
@@ -314,12 +314,12 @@ namespace App_Code.Controls
                 else
                 {
                     Blog.CurrentInstance.Cache.Add(
-                        $"{UserUniqueIdentifier}RecaptchaRenderTime", 
-                        value, 
-                        null, 
-                        Cache.NoAbsoluteExpiration, 
-                        new TimeSpan(1, 0, 0), 
-                        CacheItemPriority.Low, 
+                        $"{UserUniqueIdentifier}RecaptchaRenderTime",
+                        value,
+                        null,
+                        Cache.NoAbsoluteExpiration,
+                        new TimeSpan(1, 0, 0),
+                        CacheItemPriority.Low,
                         null);
                 }
             }
@@ -351,12 +351,12 @@ namespace App_Code.Controls
                 else
                 {
                     Blog.CurrentInstance.Cache.Add(
-                        $"{UserUniqueIdentifier}RecaptchaResponseValue", 
-                        value, 
-                        null, 
-                        Cache.NoAbsoluteExpiration, 
-                        new TimeSpan(0, 1, 0), 
-                        CacheItemPriority.NotRemovable, 
+                        $"{UserUniqueIdentifier}RecaptchaResponseValue",
+                        value,
+                        null,
+                        Cache.NoAbsoluteExpiration,
+                        new TimeSpan(0, 1, 0),
+                        CacheItemPriority.NotRemovable,
                         null);
                 }
             }
@@ -382,16 +382,16 @@ namespace App_Code.Controls
             var log = RecaptchaLogger.ReadLogItems();
 
             var logItem = new RecaptchaLogItem
-                {
-                    Response = this.RecaptchaResponseValue, 
-                    Challenge = this.RecaptchaChallengeValue, 
-                    CommentId = comment.Id, 
-                    Enabled = this.RecaptchaEnabled, 
-                    Necessary = this.RecaptchaNecessary, 
-                    NumberOfAttempts = this.RecaptchaAttempts, 
-                    TimeToComment = DateTime.Now.Subtract(this.PageLoadTime).TotalSeconds, 
-                    TimeToSolveCapcha = DateTime.Now.Subtract(this.RecaptchaRenderTime).TotalSeconds
-                };
+            {
+                Response = this.RecaptchaResponseValue,
+                Challenge = this.RecaptchaChallengeValue,
+                CommentId = comment.Id,
+                Enabled = this.RecaptchaEnabled,
+                Necessary = this.RecaptchaNecessary,
+                NumberOfAttempts = this.RecaptchaAttempts,
+                TimeToComment = DateTime.Now.Subtract(this.PageLoadTime).TotalSeconds,
+                TimeToSolveCapcha = DateTime.Now.Subtract(this.RecaptchaRenderTime).TotalSeconds
+            };
             log.Add(logItem);
 
             if (log.Count > this.MaxLogEntries)
@@ -450,9 +450,10 @@ namespace App_Code.Controls
             else
             {
                 var validator = new RecaptchaValidator
-                    {
-                       PrivateKey = this.privateKey, RemoteIP = Utils.GetClientIP() 
-                    };
+                {
+                    PrivateKey = this.privateKey,
+                    RemoteIP = Utils.GetClientIP()
+                };
                 if (String.IsNullOrEmpty(this.RecaptchaChallengeValue) &&
                     String.IsNullOrEmpty(this.RecaptchaResponseValue))
                 {
@@ -486,6 +487,12 @@ namespace App_Code.Controls
             base.OnInit(e);
 
             var settings = ExtensionManager.GetSettings("Recaptcha");
+
+            if (settings == null)
+            {
+                throw new ApplicationException("reCAPTCHA settings not found.");
+            }
+
             this.publicKey = settings.GetSingleValue("PublicKey");
             this.privateKey = settings.GetSingleValue("PrivateKey");
 
